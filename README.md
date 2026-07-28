@@ -1,5 +1,5 @@
-# DSC 190 SU1 2026 — Team 9
-UC San Diego | Halıcıoğlu Data Science Institute (HDSI)
+# DSC 190 SU1 2026 Team 9
+UC San Diego | Halıcıoğlu Data Science Institute (HDSI) | Jacobs School of Engineering
 
 ## Team Members
 
@@ -13,7 +13,7 @@ UC San Diego | Halıcıoğlu Data Science Institute (HDSI)
 
 ## Abstract
 
-DonkeyCar's default image-only CNN pipeline (no GPS) struggles to generalize across changing lighting conditions. Our CNN relies purely on camera images — there's no GPS localization to fall back on. That means the model's only signal for staying on track is what it sees, and what it sees changes dramatically throughout the day: shifting shadows, brightness, and saturation. In prior coursework, this meant a model trained in the morning simply couldn't drive at night, and vice versa, forcing us to train three separate models — one per time of day. That workaround got us through the original assignment, but it isn't a real solution: it doesn't scale, and it sidesteps the actual problem — the model was never taught to generalize in the first place.
+DonkeyCar's default image-only CNN pipeline (no GPS) struggles to generalize across changing lighting conditions. Our CNN relies purely on camera images - there's no GPS localization to fall back on. That means the model's only signal for staying on track is what it sees, and what it sees changes dramatically throughout the day: shifting shadows, brightness, and saturation. In prior coursework, this meant a model trained in the morning simply couldn't drive at night, and vice versa, forcing us to train three separate models - one per time of day. That workaround got us through the original assignment, but it isn't a real solution: it doesn't scale, and it sidesteps the actual problem - the model was never taught to generalize in the first place.
 
 This project tackles that problem directly. Using data augmentation, guided by Claude as an AI coding agent, we aim to train a single, unified CNN that generalizes across all lighting conditions, and to contribute our augmentation improvements back to the open-source [DonkeyCar](https://github.com/autorope/donkeycar) project via a pull request.
 
@@ -57,9 +57,9 @@ These build on DonkeyCar's existing `BRIGHTNESS` and `BLUR` augmentations, which
 
 | | Augmentations | Trained On | Result |
 |---|---|---|---|
-| **Model 1** | *(e.g., none — baseline)* | morning + midday + night | |
-| **Model 2** | *(e.g., SHADOW)* | morning + midday + night | |
-| **Model 3** | *(e.g., SHADOW, HUE_SAT, RGB_SHIFT)* | morning + midday + night | |
+| **Model 1** | original augumentations — baseline | morning + midday + night | |
+| **Model 2** | SHADOW, HUE_SAT, RGB_SHIFT | morning + midday + night | |
+| **Model 3** | *(e.g.,??)* | morning + midday + night | |
 
 **Gantt chart changes / lessons learned on timeline:**
 -
@@ -104,6 +104,6 @@ These build on DonkeyCar's existing `BRIGHTNESS` and `BLUR` augmentations, which
 
 | Name | Email |
 |---|---|
-| Evelyn Na | |
-| Bora Vanli | |
+| Evelyn Na | | woojoona0720@gmail.com
+| Bora Vanli | | 
 | Roberto Huizar | |

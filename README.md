@@ -1,4 +1,7 @@
-# DSC 190 SU1 2026 Team 9
+# Making the Donkeycar CNN More Robust with Data Augmentation
+
+DSC 190 SU1 2026 Final Project
+
 UC San Diego | Halıcıoğlu Data Science Institute (HDSI) | Jacobs School of Engineering
 
 ## Team Members

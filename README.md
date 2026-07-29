@@ -47,26 +47,30 @@ This project tackles that problem directly, but with a stricter target than simp
 
 **Augmentations implemented:**
 
-We extended DonkeyCar's `ImageAugmentation` pipeline (built on the [albumentations](https://albumentations.ai/) library) with three new augmentations targeting our specific failure modes: shadows, saturation shifts, and color-temperature differences between sessions.
+We extended DonkeyCar's `ImageAugmentation` pipeline (built on the [albumentations](https://albumentations.ai/) library) with new augmentations targeting failure modes identified by analyzing our own driving images with Claude: shadows, saturation/color-temperature shifts, streetlight glare, local bright/dark contrast, and motion streaking.
 
 | Augmentation | Targets | Config Parameter(s) |
 |---|---|---|
-| `SHADOW` | Random shadow regions (tree/building shadows) | `AUG_NUM_SHADOWS_LIMIT` |
+| `SHADOW` | Random shadow regions (kept for generalization, though not observed in our own dataset) | `AUG_NUM_SHADOWS_LIMIT` |
 | `HUE_SAT` | Saturation/hue shifts between sessions | `AUG_HUE_SHIFT_LIMIT`, `AUG_SAT_SHIFT_LIMIT`, `AUG_VAL_SHIFT_LIMIT` |
 | `RGB_SHIFT` | Color-temperature shifts (warm morning light vs. cool/artificial night lighting) | `AUG_R_SHIFT_LIMIT`, `AUG_G_SHIFT_LIMIT`, `AUG_B_SHIFT_LIMIT` |
+| `SUNFLARE` | Streetlight glare/blown highlights at night | `AUG_SUNFLARE_SRC_RADIUS`, `AUG_SUNFLARE_NUM_FLARE_CIRCLES_RANGE`, `AUG_SUNFLARE_FLARE_ROI` |
+| `GAMMA` | Non-linear midtone exposure differences | `AUG_GAMMA_LIMIT` |
+| `CLAHE` | Local contrast (bright/dark coexisting in the same frame) | `AUG_CLAHE_CLIP_LIMIT`, `AUG_CLAHE_TILE_GRID_SIZE` |
+| `MOTION_BLUR` | Directional streaking from longer night shutter speed + vehicle motion | `AUG_MOTION_BLUR_LIMIT` |
 
-These build on DonkeyCar's existing `BRIGHTNESS` and `BLUR` augmentations, which were already part of the default pipeline. Code: [`donkeycar/pipeline/augmentations.py`](https://github.com/wona-evelyn/donkeycar/blob/main/donkeycar/pipeline/augmentations.py) in [our fork](https://github.com/wona-evelyn/donkeycar).
+These build on DonkeyCar's existing `BRIGHTNESS` and `BLUR` augmentations, which were already part of the default pipeline. We validated each addition against our own captured images before implementing — for example, we confirmed real motion-blur streaking in a night frame before adding `MOTION_BLUR`, but skipped an initially-planned `ISONoise` augmentation after quantitative noise measurement showed our night images were *not* grainier than daytime ones. Code: [`donkeycar/pipeline/augmentations.py`](https://github.com/wona-evelyn/donkeycar/blob/main/donkeycar/pipeline/augmentations.py) in [our fork](https://github.com/wona-evelyn/donkeycar).
 
 **Models trained and tested:**
 
-Our core comparison is between the two single-session models (Model 1 vs. Model 2, both trained on midday data as our chosen single session) — the central question of this project. The morning/night single-session baselines are a supporting reference point showing how a model performs entirely outside its own recorded lighting condition.
+All models are trained on a single session (midday) only, to test whether one recording session plus augmentation can generalize across all lighting conditions — our project's central question.
 
 | | Augmentations | Trained On | Tested On | Result |
 |---|---|---|---|---|
-| **Model 1 — Single-Session Baseline (midday)** | Default (none added) | midday only | morning, midday, night | |
-| **Model 2 — Single-Session + Augmentation (midday)** | `SHADOW`, `HUE_SAT`, `RGB_SHIFT` | midday only | morning, midday, night | |
-| Model 3 — Morning Baseline *(reference)* | Default (none added) | morning only | morning, midday, night | |
-| Model 4 — Night Baseline *(reference)* | Default (none added) | night only | morning, midday, night | |
+| **Baseline** | Default (none added) | midday only | morning, midday, night | |
+| **FinalProjectModel1** | `SHADOW`, `HUE_SAT`, `RGB_SHIFT` | midday only | morning, midday, night | |
+| **FinalProjectModel2** | `SHADOW`, `HUE_SAT`, `RGB_SHIFT`, `SUNFLARE`, `GAMMA`, `CLAHE` | midday only | morning, midday, night | |
+| **FinalProjectModel3** | `SHADOW`, `HUE_SAT`, `RGB_SHIFT`, `SUNFLARE`, `GAMMA`, `CLAHE`, `MOTION_BLUR` | midday only | morning, midday, night | |
 
 **Gantt chart changes / lessons learned on timeline:**
 -

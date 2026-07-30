@@ -40,10 +40,24 @@ This project tackles that problem directly, but with a stricter target than simp
 
 ## Accomplishments
 
-*(To be filled in as the project progresses)*
-
 **What we have done:**
--
+- Recalibrated the car's camera and re-collected morning/midday/night driving data after the camera adjustment, since the original data was tied to the previous camera configuration
+- Reframed our project's core question from "combine multiple sessions" to a stricter target: can a **single session, collected at any time of day**, plus augmentation, generalize across all lighting conditions — testing whether future cohorts could skip multi-session data collection entirely
+- Located and understood DonkeyCar's existing augmentation pipeline (`donkeycar/pipeline/augmentations.py`, built on the albumentations library) by having Claude trace how it's wired into the training loop and config system
+- Used Claude to directly analyze our own captured driving images (not just the codebase) to identify real, evidence-based failure modes rather than assumed ones — this changed our plan more than once:
+  - Confirmed real color-temperature and saturation shifts between sessions → implemented `HUE_SAT`, `RGB_SHIFT`
+  - Confirmed genuine streetlight glare in night images → implemented `SUNFLARE`, and adjusted its `flare_roi` after noticing our lights sit at wall height, not overhead like a sun
+  - Confirmed local bright/dark coexistence in night frames (a blown-out wall light next to a dark wall) → implemented `GAMMA` and `CLAHE`
+  - Confirmed real horizontal motion-blur streaking in a night frame (likely from a longer shutter speed at night) → implemented `MOTION_BLUR`
+  - **Tested and rejected** two initial assumptions using quantitative image analysis rather than guesswork: our dataset shows no hard-edged shadows (kept `SHADOW` anyway, since it's harmless for future sunny-day data), and night frames measured *less* noisy than daytime frames, not more — so we skipped implementing `ISONoise`
+- Implemented and version-verified all seven augmentations against our installed albumentations 2.0.8 (catching two breaking API changes — `RandomShadow` and `RandomSunFlare` parameter renames — before they caused silent failures)
+- Trained a baseline model and three progressively augmented models (`FinalProjectModel1`, `2`, `3`) on a single midday session
+- Committed all augmentation work to our DonkeyCar fork with a clean commit history, ready to open a pull request once validated
+
+**Gantt chart changes / lessons learned on timeline:**
+- Added a full baseline re-collection step mid-project after the camera recalibration, which shifted our original timeline
+- Replaced a planned "documentation-first iteration" comparison step with direct image-based diagnosis, which turned out to be a more direct way to validate augmentation choices against real evidence
+- Added a dedicated debugging/troubleshooting stage after discovering our midday baseline doesn't reliably stay on track even under its own training conditions — this is currently in progress (see Challenges)
 
 **Augmentations implemented:**
 

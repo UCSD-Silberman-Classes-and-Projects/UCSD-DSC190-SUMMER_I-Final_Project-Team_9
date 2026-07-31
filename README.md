@@ -121,10 +121,14 @@ All models are trained on a single session (midday) only, to test whether one re
 ## Final Project Videos
 
 ### Final Presentation Slides
-*(Link to slides)*
+https://docs.google.com/presentation/d/1RcToqMur0FWXHRwW5vj3S9iEqYiJRJFE3sEL4WN-_zg/edit?usp=sharing
 
 ### Video
-*(Movie or live demonstration link)*
+Demo video of FinalProjectModel3 auto-driven during midday
+https://drive.google.com/file/d/1xk6jBapw42spCtV5l6vIbB4MbvuVLnxW/view?usp=sharing
+
+Failure video of FinalProjectModel3 auto-driven at night
+https://drive.google.com/file/d/1YHL8rXfIcc2Zc41kUO9KOl3c50I5Yuit/view?usp=sharing
 
 ---
 
@@ -132,7 +136,7 @@ All models are trained on a single session (midday) only, to test whether one re
 
 - [DonkeyCar](https://github.com/autorope/donkeycar) — open-source autonomous vehicle framework
 - [Claude Code](https://claude.com/claude-code) — AI coding agent used throughout development
-- DSC 190 course staff, UC San Diego Halıcıoğlu Data Science Institute
+- DSC 190 course staff, UC San Diego Halıcıoğlu Data Science Institute, UC San Diego Jacobs School of Engineering
 
 ---
 
@@ -141,5 +145,5 @@ All models are trained on a single session (midday) only, to test whether one re
 | Name | Email |
 |---|---|
 | Evelyn Na | woojoona0720@gmail.com |
-| Bora Vanli | |
-| Roberto Huizar | |
+| Bora Vanli | bvanli@ucsd.edu |
+| Roberto Huizar | rohuizar@ucsd.edu |

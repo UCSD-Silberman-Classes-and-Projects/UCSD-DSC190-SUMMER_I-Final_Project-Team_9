@@ -116,6 +116,22 @@ All models are trained on a single session (midday) only, to test whether one re
 - Repeat the single-session experiment starting from a session recorded at a different time of day (e.g., morning instead of midday), to confirm any result generalizes and isn't specific to midday lighting
 - Complete the documentation-first iteration comparison from our original proposal, which we deprioritized in favor of direct image-based diagnosis this time around
 
+**Lessons learned:**
+
+*On working with Claude/AI agents:*
+- Having Claude analyze our actual captured images, not just the codebase, led to far more accurate diagnoses than working from assumptions
+- Version-sensitive libraries (like albumentations) need their exact installed version checked before applying any AI-suggested code — this caught two breaking API changes before they caused silent failures
+- When Claude pushed back on an augmentation we assumed we needed (`ISONoise`), trusting that pushback over our own assumption was the right call — verified evidence should outrank instinct
+
+*On engineering and debugging:*
+- A correct diagnosis doesn't guarantee a correct fix — we correctly identified that background objects were contaminating training, but the crop fix we applied based on that diagnosis made performance worse, not better
+- Ruling out causes systematically (config, then hardware, then data) was far more efficient than changing multiple things at once and hoping something worked
+- More augmentations isn't automatically better — dropping from seven to five augmentations produced comparable results, suggesting weakly-justified augmentations can hurt training rather than help it
+
+*On project management:*
+- A mid-project hardware change (camera recalibration) triggered far more downstream work than expected — full data re-collection and baseline re-validation, not just a quick adjustment
+- Replacing our original plan (documentation-first iteration) with a more direct approach (image-based diagnosis) turned out to be the right call — plans should flex when a better method becomes obvious mid-project
+
 ---
 
 ## Final Project Videos

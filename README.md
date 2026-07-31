@@ -121,14 +121,16 @@ All models are trained on a single session (midday) only, to test whether one re
 ## Final Project Videos
 
 ### Final Presentation Slides
+
 https://docs.google.com/presentation/d/1RcToqMur0FWXHRwW5vj3S9iEqYiJRJFE3sEL4WN-_zg/edit?usp=sharing
 
 ### Video
+
 Demo video of FinalProjectModel3 auto-driven during midday
-https://drive.google.com/file/d/1xk6jBapw42spCtV5l6vIbB4MbvuVLnxW/view?usp=sharing
+- https://drive.google.com/file/d/1xk6jBapw42spCtV5l6vIbB4MbvuVLnxW/view?usp=sharing
 
 Failure video of FinalProjectModel3 auto-driven at night
-https://drive.google.com/file/d/1YHL8rXfIcc2Zc41kUO9KOl3c50I5Yuit/view?usp=sharing
+- https://drive.google.com/file/d/1YHL8rXfIcc2Zc41kUO9KOl3c50I5Yuit/view?usp=sharing
 
 ---
 
